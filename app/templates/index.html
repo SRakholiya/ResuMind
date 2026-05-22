@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ResuMind</title>
+<meta name="description" content="Upload your resume and a job description to get an AI-powered fit score, missing keywords, strengths, weaknesses, and a downloadable PDF report." />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">📝</span>
+    <div>
+      <h1>ResuMind</h1>
+      <p class="tagline">Match your resume to any job — in seconds.</p>
+    </div>
+  </div>
+  <a class="ghost-link" href="https://console.groq.com/keys" target="_blank" rel="noopener">Get free API key →</a>
+</header>
+
+<main class="container">
+
+  <!-- INPUT CARD -->
+  <section class="card" id="input-card">
+    <h2>1 · Your Resume</h2>
+
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="upload" role="tab">📄 Upload file</button>
+      <button class="tab" data-tab="paste" role="tab">✏️ Paste text</button>
+    </div>
+
+    <div class="tab-panel active" data-panel="upload">
+      <label class="dropzone" id="dropzone">
+        <input type="file" id="resume-file" accept=".pdf,.docx,.txt" hidden />
+        <div class="dz-icon">⬆️</div>
+        <div class="dz-text">
+          <strong>Drop your resume here</strong><br />
+          <span class="muted">or click to browse · PDF, DOCX, TXT · max 10 MB</span>
+        </div>
+        <div class="dz-file" id="dz-file" hidden></div>
+      </label>
+    </div>
+
+    <div class="tab-panel" data-panel="paste">
+      <textarea id="resume-text" rows="10" placeholder="Paste your resume content here..."></textarea>
+    </div>
+
+    <h2>2 · Job Description <span class="muted small">(optional but recommended)</span></h2>
+    <textarea id="job-desc" rows="6" placeholder="Paste the job description you're targeting..."></textarea>
+
+    <div class="actions">
+      <button id="analyze-btn" class="btn primary">
+        <span class="btn-label">⚡ Analyze Resume</span>
+        <span class="spinner" hidden></span>
+      </button>
+      <button id="reset-btn" class="btn ghost" hidden>Start over</button>
+    </div>
+
+    <div id="error" class="error" hidden></div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" hidden>
+
+    <div class="score-grid">
+      <div class="score-card primary-grad">
+        <div class="score-label">AI Match Score</div>
+        <div class="score-number"><span id="score-num">0</span><small>/100</small></div>
+        <div class="score-bar"><div class="score-bar-fill" id="score-fill"></div></div>
+        <div class="verdict" id="verdict">—</div>
+      </div>
+
+      <div class="score-card">
+        <div class="score-label">ATS Similarity</div>
+        <div class="score-number small"><span id="ats-num">—</span><small>%</small></div>
+        <p class="muted small">Lightweight TF-IDF cosine similarity between your resume and the JD.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📋 Summary</h2>
+      <p id="summary" class="body-text"></p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h2>✅ Strengths</h2>
+        <ul id="strengths" class="bullet-list"></ul>
+      </div>
+      <div class="card">
+        <h2>⚠️ Weaknesses</h2>
+        <ul id="weaknesses" class="bullet-list"></ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🔑 Keywords</h2>
+      <h3 class="kw-h">Matched in your resume</h3>
+      <div class="chips" id="matched-chips"></div>
+      <h3 class="kw-h" style="margin-top:1rem">Missing from your resume</h3>
+      <div class="chips" id="missing-chips"></div>
+    </div>
+
+    <div class="card">
+      <h2>📊 Section Scores</h2>
+      <div id="sections" class="sections"></div>
+    </div>
+
+    <div class="card">
+      <h2>💡 Suggestions to Improve</h2>
+      <ul id="suggestions" class="bullet-list"></ul>
+    </div>
+
+    <div class="actions center">
+      <button id="download-btn" class="btn primary">⬇️ Download PDF Report</button>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>Built with Flask + Groq · 100% free with a free Groq API key</p>
+</footer>
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

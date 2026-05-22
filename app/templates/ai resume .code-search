@@ -1,0 +1,22 @@
+# Query: ai resume 
+# ContextLines: 1
+
+4 results - 3 files
+
+ai-resume-analyzer-pro\README.md:
+  124  
+  125: MIT — original concept based on the Altoks-AI ResuMind, rebuilt with a modern stack.
+
+ai-resume-analyzer-pro\app\services\report.py:
+  52          topMargin=0.7 * inch, bottomMargin=0.7 * inch,
+  53:         title="ResuMind",
+  54      )
+
+  58      # Header
+  59:     story.append(Paragraph("ResuMind", s["title"]))
+  60      story.append(Paragraph(
+
+ai-resume-analyzer-pro\app\templates\index.html:
+  18      <div>
+  19:       <h1>ResuMind </h1>
+  20        <p class="tagline">Match your resume to any job — in seconds.</p>
